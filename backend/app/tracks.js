@@ -9,8 +9,12 @@ const router = express.Router();
 
 router.get('/', async(req, res) => {
     if(req.query.album){
-        const albumTracks = await Track.find({album: ObjectId(req.query.album)})
-        res.send(albumTracks);
+        try{
+            const albumTracks = await Track.find({album: ObjectId(req.query.album)});
+            res.send(albumTracks);
+        } catch(e) {
+            res.status(400).send(e);
+        }
     } else {
         const tracks = await Track.find();
         res.send(tracks);

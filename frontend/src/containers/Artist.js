@@ -8,14 +8,18 @@ import {NavLink} from "react-router-dom";
 const Artist = (props) => {
     useEffect(() => {
         props.fetchAlbums(props.match.params.id);
+        // eslint-disable-next-line
     }, []);
+    const openAlbum = (albumId) => {
+        props.history.replace('/album/' + albumId);
+    };
     return (
         <Container>
             <NavLink to='/'>Home</NavLink>
-            <h2>Artists albums</h2>
+            <h2>Artist's albums</h2>
 
             {props.albums.map(album => (
-                <Card className='my-3' key={album._id}>
+                <Card className='my-3' key={album._id} onClick={() => openAlbum(album._id)}>
                     <ImageThumbnail image={album.coverImage}/>
                     <p>{album.name}</p>
                     <p>{album.date}</p>

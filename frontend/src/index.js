@@ -12,10 +12,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter} from "react-router-dom";
 import artistsReducer from "./store/reducers/artistsReducer";
 import albumsReducer from "./store/reducers/albumsReducer";
+import tracksReducer from "./store/reducers/tracksReducer";
 
 const rootReducer = combineReducers({
     artists: artistsReducer,
-    albums: albumsReducer
+    albums: albumsReducer,
+    tracks: tracksReducer
 });
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

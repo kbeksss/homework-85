@@ -7,6 +7,7 @@ import ImageThumbnail from "../components/ImageThumbnail/ImageThumbnail";
 const Home = (props) => {
     useEffect(() => {
         props.fetchArtists();
+        // eslint-disable-next-line
     }, []);
     const openArtist = (id) => {
         props.history.push('/artist/'+id);
