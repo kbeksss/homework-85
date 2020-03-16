@@ -6,11 +6,16 @@ import Album from "./containers/Album";
 
 function App() {
   return (
-    <Switch>
-      <Route path='/' exact component={Home}/>
-      <Route path='/artist/:id' exact component={Artist}/>
-      <Route path='/album/:albumId' exact component={Album}/>
-    </Switch>
+      <>
+          <header>
+
+          </header>
+          <Switch>
+              <Route path='/' exact component={Home}/>
+              <Route path='/artist/:id' exact component={Artist}/>
+              <Route path='/album/:albumId' exact component={Album}/>
+          </Switch>
+      </>
   );
 }
 
