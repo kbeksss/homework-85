@@ -10,10 +10,10 @@ const Toolbar = () => {
 
     return (
         <Navbar color="light" light expand="md">
-            <NavbarBrand tag={RouterNavLink} to="/">Shop</NavbarBrand>
+            <NavbarBrand tag={RouterNavLink} to="/">Tracks</NavbarBrand>
             <Nav className="ml-auto" navbar>
                 <NavItem>
-                    <NavLink tag={RouterNavLink} to="/" exact>Products</NavLink>
+                    <NavLink tag={RouterNavLink} to="/" exact>Home</NavLink>
                 </NavItem>
                 {user ? (
                     <UserMenu user={user}/>

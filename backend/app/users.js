@@ -32,7 +32,7 @@ router.post('/sessions', async (req, res) => {
     user.generateToken();
     await user.save();
 
-    res.send({token: user.token});
+    res.send(user);
 });
 
 module.exports = router;

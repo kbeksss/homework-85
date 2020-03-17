@@ -1,37 +1,38 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const TrackHistory = require('../models/TrackHistory');
-const User = require('../models/User');
 const Track = require('../models/Track');
+const Album = require('../models/Album');
+const auth = require('../middleware/auth');
+
+const ObjectId = mongoose.Types.ObjectId;
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
-    const authorizationHeader = req.get('Authorization');
+router.post('/', auth, async (req, res) => {
 
-    if(!authorizationHeader){
-        return res.status(401).send({error: 'Not authorized'});
-    }
-    const [type, token] = authorizationHeader.split(' ');
-    if(type !== 'Token' || !token){
-        return res.status(401).send({error: "Not authorized"});
-    }
-    const user = await User.findOne({token});
-
-    if(!user){
-        return res.status(401).send({error: "Unauthorized user"});
-    }
     const track = await Track.findById(req.body.track);
     if(!track){
         return res.status(401).send({error: "No such track"});
     }
     const dateTime = new Date();
-    const trackHistory = new TrackHistory({...req.body, datetime: dateTime.toISOString(), user: user._id});
+    const trackHistory = new TrackHistory({...req.body, datetime: dateTime.toISOString(), user: req.user._id});
 
     try{
         await trackHistory.save();
         res.send(trackHistory);
     } catch(e){
         res.status(400).send(e);
+    }
+});
+
+router.get('/', auth, async (req, res) => {
+    try{
+        const trackHistoriesData = await TrackHistory.find({user: ObjectId(req.user._id)}).populate( {path : 'track', populate: {path: 'album', populate: {path: 'artist'}}});
+        console.log(trackHistoriesData);
+        res.send(trackHistoriesData);
+    } catch(e) {
+        res.status(404).send({message: e})
     }
 });
 
