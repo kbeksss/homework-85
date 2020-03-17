@@ -69,6 +69,7 @@ const run = async () => {
         number: 1
     });
 
+
     mongoose.connection.close();
 };
 
