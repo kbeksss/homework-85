@@ -11,7 +11,7 @@ export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
 
 
 export const registerUserRequest = () => ({type: REGISTER_USER_REQUEST});
-export const registerUserSuccess = () => ({ type: REGISTER_USER_SUCCESS});
+export const registerUserSuccess = (user) => ({ type: REGISTER_USER_SUCCESS, user});
 export const registerUserFailure = error => ({type: REGISTER_USER_FAILURE, error});
 
 export const loginUserRequest = () => ({type: LOGIN_USER_REQUEST});
@@ -23,8 +23,8 @@ export const registerUser = userData => {
     return async dispatch => {
         try{
             dispatch(registerUserRequest());
-            await axiosApi.post('/users', userData);
-            dispatch(registerUserSuccess());
+            const response = await axiosApi.post('/users', userData);
+            dispatch(registerUserSuccess(response.data));
             dispatch(push('/'));
         } catch (error){
             if(error.response){
