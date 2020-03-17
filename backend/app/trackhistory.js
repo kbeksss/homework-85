@@ -29,7 +29,6 @@ router.post('/', auth, async (req, res) => {
 router.get('/', auth, async (req, res) => {
     try{
         const trackHistoriesData = await TrackHistory.find({user: ObjectId(req.user._id)}).populate( {path : 'track', populate: {path: 'album', populate: {path: 'artist'}}});
-        console.log(trackHistoriesData);
         res.send(trackHistoriesData);
     } catch(e) {
         res.status(404).send({message: e})
